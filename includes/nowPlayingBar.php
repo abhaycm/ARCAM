@@ -1,19 +1,87 @@
+<?php
+$songQuery = mysqli_query($con,"select s_id from song order by rand() limit 10");
+$resultArray = array();
+
+while($row = mysqli_fetch_array($songQuery)) {
+    array_push($resultArray,$row['s_id']);
+}
+
+$jsonArray = json_encode($resultArray);
+?>
+
+<script>
+
+$(document).ready(function() {
+	currentPlaylist = <?php echo $jsonArray; ?>;
+	audioElement = new Audio();
+	setTrack(currentPlaylist[0], currentPlaylist, false);
+});
+
+
+function setTrack(trackId, newPlaylist, play) {
+    // php executed before this whole file is loaded
+	$.post("includes/handlers/ajax/getSongJson.php", { songId: trackId }, function(data) { // the ajax call
+		
+		var track = JSON.parse(data);
+
+        $(".trackName span").text(track.name);
+
+        $.post("includes/handlers/ajax/getArtistJson.php", { artistId: track.a_id }, function(data){
+            var artist = JSON.parse(data);
+            $(".artistName span").text(artist.name);
+        });
+
+        $.post("includes/handlers/ajax/getReleaseJson.php", { releaseId: track.r_id }, function(data){
+            var release = JSON.parse(data);
+            $(".albumLink img").attr("src", release.cover_art);
+        });
+
+		audioElement.setTrack(track);
+		playSong()
+	});
+
+	if(play == true) {
+		audioElement.play();
+	}
+}
+
+
+function playSong() {
+
+    if(audioElement.audio.currentTime == 0){
+        $.post("includes/handlers/ajax/updatePlays.php", { songId: audioElement.currentlyPlaying.s_id });
+    }
+
+    $(".controlButton.play").hide();
+    $(".controlButton.pause").show();
+    audioElement.play();
+}
+
+function pauseSong() {
+    $(".controlButton.pause").hide();
+    $(".controlButton.play").show();
+    audioElement.pause();
+}
+
+
+</script>
+
 <div id="nowPlayingBarContainer">
     <div id="nowPlayingBar">
         <div id="nowPlayingLeft">
             <div class="content">
                 <span class="albumLink">
-                    <img src="https://freesvg.org/img/1286146771.png" class="albumArtwork" alt="">
+                    <img src="" class="albumArtwork" alt="">
                 </span>
 
                 <div class="trackInfo">
 
                     <span class="trackName">
-                        <span>Happy Birthday</span>
+                        <span></span>
                     </span>
 
                     <span class="artistName">
-                        <span>Reece Kenney</span>
+                        <span></span>
                     </span>
 
                 </div>
@@ -29,10 +97,10 @@
                     <button class="controlButton previous" title="Previous Button">
                         <img src="assets/images/icons/previous.png" alt="Previous">
                     </button>
-                    <button class="controlButton play" title="Play Button">
+                    <button class="controlButton play" title="Play Button" onclick="playSong()">
                         <img src="assets/images/icons/play.png" alt="Play">
                     </button>
-                    <button class="controlButton pause" title="Pause Button" style="display:none;">
+                    <button class="controlButton pause" title="Pause Button" style="display:none;" onclick="pauseSong()">
                         <img src="assets/images/icons/pause.png" alt="Pause">
                     </button>
                     <button class="controlButton next" title="Next Button">
