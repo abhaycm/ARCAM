@@ -7,8 +7,13 @@ var currentIndex = 0;
 var repeat = false;
 var shuffle= false;
 var userLoggedIn;
+var timer;
 
 function openPage(url) {
+
+    if(timer != null) {
+        clearTimeout(timer);
+    }
 
 	if(url.indexOf("?") == -1) {
 		url = url + "?";
@@ -19,6 +24,47 @@ function openPage(url) {
     $("body").scrollTop(0);
     history.pushState(null,null,url);
 
+}
+
+function createPlaylist() { 
+    console.log(userLoggedIn);
+    var popup = prompt("Enter playlist name");
+
+    if(popup != null){
+        
+        $.post("includes/handlers/ajax/createPlaylist.php", {name: popup, username: userLoggedIn }) // userLoggedIn is from yhe header file
+        .done(function(error) { // done handles ajax returns
+
+            if(error != "") {
+                alert(error);
+                return;
+            }
+            
+            openPage("yourMusic.php"); // refresh
+        });
+
+    }
+}
+
+function deletePlaylist(playlistId) {
+	var prompt = confirm("Are you sure you want to delete this playlist?");
+
+	if(prompt == true) {
+
+		$.post("includes/handlers/ajax/deletePlaylist.php", { playlistId: playlistId })
+		.done(function(error) {
+
+			if(error != "") {
+				alert(error);
+				return;
+			}
+
+			//do something when ajax returns
+			openPage("yourMusic.php");
+		});
+
+
+	}
 }
  
 

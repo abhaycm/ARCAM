@@ -393,6 +393,57 @@ body {
     margin-bottom: 20px;
 }
 
+.searchContainer {
+    background-color: #242424;
+    padding: 20px 28px;
+}
+
+.searchContainer h4 {
+    margin: 0;
+    font-weight: 300;
+}
+
+.searchContainer .searchInput {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    font-size: 62px;
+    letter-spacing: 2px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.searchResultRow {
+    padding: 15px 10px;
+}
+
+.searchResultRow:hover {
+    background-color: #282828;
+}
+
+.searchResultRow .artistName span {
+    color: #fff;
+}
+
+.noResults {
+    margin: 15px;
+    display: block;
+}
+
+.buttonItems .button {
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+ .playlistsContainer {
+    padding: 10px 0;
+ }
+
+
 
 
 
