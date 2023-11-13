@@ -51,6 +51,23 @@
 
 		}
 
+        public static function getPlaylistsDropdown($con, $username) {
+			$dropdown = '<select class="item playlist">
+							<option value="">Add to playlist</option>';
+
+			$query = mysqli_query($con, "SELECT p_id, name FROM playlist WHERE username='$username'");
+			while($row = mysqli_fetch_array($query)) {
+				$id = $row['p_id'];
+				$name = $row['name'];
+
+				$dropdown = $dropdown . "<option value='$id'>$name</option>";
+			}
+
+
+			return $dropdown . "</select>";
+		}
+
+
 
 	}
 ?>

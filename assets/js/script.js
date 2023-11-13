@@ -9,6 +9,69 @@ var shuffle= false;
 var userLoggedIn;
 var timer;
 
+$(document).click(function(click) {
+	var target = $(click.target);
+
+	if(!target.hasClass("item") && !target.hasClass("optionsButton")) {
+		hideOptionsMenu();
+	}
+});
+
+$(window).scroll(function() {
+	hideOptionsMenu();
+});
+
+$(document).on("change", "select.playlist", function() {
+	var playlistId = $(this).val();
+	var songId = $(this).prev(".songId").val();
+
+    $.post("includes/handlers/ajax/addToPlaylist.php", { playlistId: playlistId, songId: songId})
+	.done(function(error) {
+
+		if(error != "") {
+			alert(error);
+			return;
+		}
+
+		hideOptionsMenu();
+		select.val("");
+	});
+});
+
+function updateEmail(emailClass) {
+	var emailValue = $("." + emailClass).val();
+
+	$.post("includes/handlers/ajax/updateEmail.php", { email: emailValue, username: userLoggedIn})
+	.done(function(response) {
+		$("." + emailClass).nextAll(".message").text(response);
+	})
+}
+
+function updatePassword(oldPasswordClass, newPasswordClass1, newPasswordClass2) {
+	var oldPassword = $("." + oldPasswordClass).val();
+	var newPassword1 = $("." + newPasswordClass1).val();
+	var newPassword2 = $("." + newPasswordClass2).val();
+
+	$.post("includes/handlers/ajax/updatePassword.php", 
+		{ oldPassword: oldPassword,
+			newPassword1: newPassword1,
+			newPassword2: newPassword2, 
+			username: userLoggedIn})
+
+	.done(function(response) {
+		$("." + oldPasswordClass).nextAll(".message").text(response);
+	})
+
+
+}
+
+
+function logout() {
+	$.post("includes/handlers/ajax/logout.php", function() {
+		location.reload();
+	});
+}
+
 function openPage(url) {
 
     if(timer != null) {
@@ -24,6 +87,22 @@ function openPage(url) {
     $("body").scrollTop(0);
     history.pushState(null,null,url);
 
+}
+
+function removeFromPlaylist(button,playlistId) {
+    var songId = $(button).prevAll(".songId").val();
+
+    $.post("includes/handlers/ajax/removeFromPlaylist.php", { playlistId: playlistId, songId: songId })
+    .done(function(error) {
+
+        if(error != "") {
+            alert(error);
+            return;
+        }
+
+        //do something when ajax returns
+        openPage("playlist.php?id="+playlistId);
+    });
 }
 
 function createPlaylist() { 
@@ -66,7 +145,30 @@ function deletePlaylist(playlistId) {
 
 	}
 }
+
+function hideOptionsMenu() {
+	var menu = $(".optionsMenu");
+	if(menu.css("display") != "none") {
+		menu.css("display", "none");
+	}
+}
  
+function showOptionsMenu(button) {
+    var songId = $(button).prevAll(".songId").val();
+	var menu = $(".optionsMenu");
+	var menuWidth = menu.width();
+    menu.find(".songId").val(songId);
+
+	var scrollTop = $(window).scrollTop(); //Distance from top of window to top of document
+	var elementOffset = $(button).offset().top; //Distance from top of document
+
+	var top = elementOffset - scrollTop;
+	var left = $(button).position().left;
+
+	menu.css({ "top": top + "px", "left": left - menuWidth + "px", "display": "inline" });
+
+}
+
 
 function formatTime(seconds){ 
     var time = Math.round(seconds);

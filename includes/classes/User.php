@@ -13,6 +13,16 @@
             return $this->username;
         }
 
+        public function getEmail() {
+			$query = mysqli_query($this->con, "SELECT email FROM user WHERE username='$this->username'");
+			$row = mysqli_fetch_array($query);
+			return $row['email'];
+		}
 
+        public function getName() {
+			$query = mysqli_query($this->con, "SELECT name FROM user WHERE username='$this->username'");
+			$row = mysqli_fetch_array($query);
+			return $row['name'];
+		}
 	}
 ?>
