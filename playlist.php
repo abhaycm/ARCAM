@@ -9,7 +9,7 @@ else {
 }
 
 $playlist = new Playlist($con,$playlistId);
-$usernaame = new User($con,$playlist->getUsername()); // the one in playlist not user
+$username = new User($con,$playlist->getUsername()); // the one in playlist not user
 ?>
 
 <div class="entityInfo">
@@ -25,6 +25,28 @@ $usernaame = new User($con,$playlist->getUsername()); // the one in playlist not
 		<p>By <?php echo $playlist->getUsername(); ?></p>
 		<p><?php echo $playlist->getNumberOfSongs(); ?> songs</p>
         <button class="button" onclick="deletePlaylist('<?php echo $playlistId; ?>')" >DELETE PLAYLIST</button>
+		<br>
+		<?php
+			$logged_user = $userLoggedIn->getUsername();
+			$u1 = mysqli_query($con,"select * from user where username = '$logged_user' ");
+			$u1_id = mysqli_fetch_array($u1);
+			$u_id = $u1_id['u_id'];
+			$p_id = $playlist->getId();
+			$p_u_id = $username->getId();
+
+			if($userLoggedIn->getId() != $p_u_id){
+				$query = mysqli_query($con, "select * from likes_playlist where u_id = '$u_id' and p_id = '$p_id' ");
+
+				if(mysqli_num_rows($query) == 0){
+					echo "<button class='heart' onclick='likesPlaylist(\"" . $p_id . "\")'><i class='fa fa-heart'></i></button>";
+				}
+				else {
+					echo "<button class='heart' onclick='dislikesPlaylist(\"" . $p_id . "\")'><i style='color: green;' class='fa fa-heart'></i></button>";
+				}
+			}
+			
+			
+		?>
 	</div>
 
 </div>

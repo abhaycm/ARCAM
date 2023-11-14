@@ -247,37 +247,43 @@ function Audio() {
 }
 
 function followUser(username) {
-    // Assuming you are using AJAX to send the request to the server
     $.post("includes/handlers/ajax/followUser.php", { username: username, userLoggedIn:userLoggedIn }, function(data) {
-        // Handle the response from the server if needed
         console.log(data);
     });
 	openPage("user.php?id="+username);
 }
 
 function unfollowUser(username) {
-    // Assuming you are using AJAX to send the request to the server
     $.post("includes/handlers/ajax/unfollowUser.php", { username: username, userLoggedIn:userLoggedIn }, function(data) {
-        // Handle the response from the server if needed
         console.log(data);
     });
 	openPage("user.php?id="+username);
 }
 
 function followArtist(artistid) {
-    // Assuming you are using AJAX to send the request to the server
     $.post("includes/handlers/ajax/followArtist.php", { artistid: artistid, userLoggedIn:userLoggedIn }, function(data) {
-        // Handle the response from the server if needed
         console.log(data);
     });
 	openPage("artist.php?id="+artistid);
 }
 
 function unfollowArtist(artistid) {
-    // Assuming you are using AJAX to send the request to the server
     $.post("includes/handlers/ajax/unfollowArtist.php", { artistid: artistid, userLoggedIn:userLoggedIn }, function(data) {
-        // Handle the response from the server if needed
         console.log(data);
     });
 	openPage("artist.php?id="+artistid);
+}
+
+function likesPlaylist(playlist_id) {
+    $.post("includes/handlers/ajax/likesPlaylist.php", { playlist_id: playlist_id, userLoggedIn:userLoggedIn }, function(data) {
+        console.log(data);
+    });
+	openPage("playlist.php?id="+playlist_id);
+}
+
+function dislikesPlaylist(playlist_id) {
+    $.post("includes/handlers/ajax/dislikesPlaylist.php", { playlist_id: playlist_id, userLoggedIn:userLoggedIn }, function(data) {
+        console.log(data);
+    });
+	openPage("playlist.php?id="+playlist_id);
 }

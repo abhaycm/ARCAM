@@ -288,6 +288,12 @@ body {
     font-weight: 200;
 }
 
+.rightSection .heart {
+    font-size:24px;
+    background-color: #181818;
+    border:none;
+}
+
 .tracklist {
     padding: 0;
 }
