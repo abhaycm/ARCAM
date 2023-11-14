@@ -31,13 +31,24 @@ $user = new User($con, $username);
 				<?php
 					$username1 = $userLoggedIn->getUsername();
 					$username2 = $username;
-					$query = mysqli_query($con, "select * from follows_user where u1 = '$username1' and u2 = '$username2' ");
 
-					if(mysqli_num_rows($query) == 0){
-						echo "<button class='button' onclick='followUser(\"" . $username2 . "\")'>FOLLOW</button>";
-					}
-					else {
-						echo "<button class='button green unfollowButton' onclick='unfollowUser(\"" . $username2 . "\")'>FOLLOWING</button>";
+					$u1 = mysqli_query($con,"select * from user where username = '$username1' ");
+					$u2 = mysqli_query($con,"select * from user where username = '$username2' ");
+					$u1_id = mysqli_fetch_array($u1);
+					$u2_id = mysqli_fetch_array($u2);
+
+					$id1 = $u1_id['u_id'];
+					$id2 = $u2_id['u_id'];
+
+					if($id1 != $id2){
+						$query = mysqli_query($con, "select * from follows_user where u1 = '$id1' and u2 = '$id2' ");
+
+						if(mysqli_num_rows($query) == 0){
+							echo "<button class='button' onclick='followUser(\"" . $username2 . "\")'>FOLLOW</button>";
+						}
+						else {
+							echo "<button class='button green unfollowButton' onclick='unfollowUser(\"" . $username2 . "\")'>FOLLOWING</button>";
+						}
 					}
 					
 					

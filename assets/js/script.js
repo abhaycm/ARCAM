@@ -252,5 +252,15 @@ function followUser(username) {
         // Handle the response from the server if needed
         console.log(data);
     });
+	openPage("user.php?id="+username);
+}
+
+function unfollowUser(username) {
+    // Assuming you are using AJAX to send the request to the server
+    $.post("includes/handlers/ajax/unfollowUser.php", { username: username, userLoggedIn:userLoggedIn }, function(data) {
+        // Handle the response from the server if needed
+        console.log(data);
+    });
+	openPage("user.php?id="+username);
 }
 
