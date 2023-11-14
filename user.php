@@ -27,8 +27,22 @@ $user = new User($con, $username);
 			<h1 class="artistName"><?php echo $user->getName(); ?></h1>
 
 			<div class="headerButtons">
-				<button class="button" onclick="">
-                                FOLLOW</button>
+				<!-- <button class="button" onclick="">FOLLOW</button> -->
+				<?php
+					$username1 = $userLoggedIn->getUsername();
+					$username2 = $username;
+					$query = mysqli_query($con, "select * from follows_user where u1 = '$username1' and u2 = '$username2' ");
+
+					if(mysqli_num_rows($query) == 0){
+						echo "<button class='button' onclick='followUser(\"" . $username2 . "\")'>FOLLOW</button>";
+					}
+					else {
+						echo "<button class='button green unfollowButton' onclick='unfollowUser(\"" . $username2 . "\")'>FOLLOWING</button>";
+					}
+					
+					
+				?>
+
 			</div>
 
 		</div>

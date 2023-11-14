@@ -27,19 +27,8 @@ $artist = new Artist($con, $artistId);
 			<h1 class="artistName"><?php echo $artist->getName(); ?></h1>
 
 			<div class="headerButtons">
-				<button class="button green" style=" color: #fff;
-                                cursor: pointer;
-                                margin-bottom: 10px;
-                                background-color: transparent;
-                                font-weight: 500;
-                                letter-spacing: 2px;
-                                border: 2px solid #fff;
-                                border-radius: 500px;
-                                padding: 15px;
-                                min-width: 130px;
-                                background-color: #2ebd59;
-                                border-color: #2ebd59;" onclick="playFirstSong()">
-                                PLAY</button>
+				<button class="button green" onclick="playFirstSong()">PLAY</button>
+                <button class="button" onclick="">FOLLOW</button>
 			</div>
 
 		</div>

@@ -245,3 +245,12 @@ function Audio() {
         this.audio.currentTime=seconds;
     }
 }
+
+function followUser(username) {
+    // Assuming you are using AJAX to send the request to the server
+    $.post("includes/handlers/ajax/followUser.php", { username: username, userLoggedIn:userLoggedIn }, function(data) {
+        // Handle the response from the server if needed
+        console.log(data);
+    });
+}
+
