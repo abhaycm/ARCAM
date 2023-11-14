@@ -292,6 +292,7 @@ body {
     font-size:24px;
     background-color: #181818;
     border:none;
+    cursor:pointer;
 }
 
 .tracklist {
@@ -519,3 +520,6 @@ input:focus {
     color:#2ebd59;
     font-weight: 300;
 } 
+
+
+

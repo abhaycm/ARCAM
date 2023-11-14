@@ -15,6 +15,12 @@
 			return $artist['name'];
 		}
 
+		public function getFollowers() {
+			$artistQuery = mysqli_query($this->con, "SELECT * FROM artist WHERE a_id='$this->id'");
+			$artist = mysqli_fetch_array($artistQuery);
+			return $artist['followers'];
+		}
+
 		public function getId() {
 			return $this->id;
 		}
@@ -32,5 +38,7 @@
 			return $array;
 
 		}
+
+		
 	}
 ?>

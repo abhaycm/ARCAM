@@ -24,8 +24,19 @@ $username = new User($con,$playlist->getUsername()); // the one in playlist not 
 		<h2><?php echo $playlist->getName(); ?></h2>
 		<p>By <?php echo $playlist->getUsername(); ?></p>
 		<p><?php echo $playlist->getNumberOfSongs(); ?> songs</p>
-        <button class="button" onclick="deletePlaylist('<?php echo $playlistId; ?>')" >DELETE PLAYLIST</button>
+        <?php
+            $logged_user = $userLoggedIn->getUsername();
+            $u1 = mysqli_query($con,"select * from user where username = '$logged_user' ");
+            $u1_id = mysqli_fetch_array($u1);
+            $u_id = $u1_id['u_id'];
+            $p_id = $playlist->getId();
+            $p_u_id = $username->getId();
+            if($userLoggedIn->getId()==$p_u_id) {
+                echo "<button class='button' onclick='deletePlaylist(\"" . $playlistId . "\")'>DELETE PLAYLIST</button>";
+            }
+        ?>
 		<br>
+		
 		<?php
 			$logged_user = $userLoggedIn->getUsername();
 			$u1 = mysqli_query($con,"select * from user where username = '$logged_user' ");
@@ -107,7 +118,4 @@ $username = new User($con,$playlist->getUsername()); // the one in playlist not 
 	<?php echo Playlist::getPlaylistsDropdown($con, $userLoggedIn->getUsername()); ?>
 	<div class="item" onclick="removeFromPlaylist(this,'<?php echo $playlistId; ?>')">Remove from Playlist</div>
 </nav>
-
-
-
 

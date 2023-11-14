@@ -28,6 +28,10 @@
             <div class="navItem">
             <span role="link" tabindex="0" onclick="openPage('settings.php')"class="navItemLink"><?php echo $userLoggedIn->getName(); ?></span>
             </div>
+
+            <div class="navItem">
+            <span role="link" tabindex="0" onclick="openPage('create.php')"class="navItemLink">Add Music</span>
+            </div>
         </div>
 
 

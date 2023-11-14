@@ -25,6 +25,7 @@ $artist = new Artist($con, $artistId);
 		<div id="artistInfo" style="text-align:center">
 
 			<h1 class="artistName"><?php echo $artist->getName(); ?></h1>
+			<h3 class="artistName"><?php echo $artist->getFollowers(); ?></h3>
 
 			<div class="headerButtons">
 				<button class="button green" onclick="playFirstSong()">PLAY</button>
