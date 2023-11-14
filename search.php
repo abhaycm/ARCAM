@@ -137,6 +137,41 @@ $(function() {
 
 </div>
 
+<div class="usersContainer borderBottom">
+
+	<h2 style="text-align: center;">USERS</h2>
+
+	<?php
+	$usersQuery = mysqli_query($con, "SELECT username FROM user WHERE username LIKE '$term%' LIMIT 10");
+	
+	if(mysqli_num_rows($usersQuery) == 0) {
+		echo "<span class='noResults'>No users found matching " . $term . "</span>";
+	}
+
+	
+	while($row = mysqli_fetch_array($usersQuery)) {
+		$userFound = new User($con, $row['username']);
+
+		echo "<div class='searchResultRow'>
+				<div class='userName'>
+
+					<span role='link' tabindex='0' onclick='openPage(\"user.php?id=" . $userFound->getUsername() ."\")'>
+					"
+					. $userFound->getUsername() .
+					"
+					</span>
+
+				</div>
+
+			</div>";
+
+	}
+
+
+	?>
+
+</div>
+
 <div class="gridViewContainer">
 	<h2 style="text-align: center;">ALBUMS</h2>
 	<?php
