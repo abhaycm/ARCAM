@@ -28,7 +28,30 @@ $artist = new Artist($con, $artistId);
 
 			<div class="headerButtons">
 				<button class="button green" onclick="playFirstSong()">PLAY</button>
-                <button class="button" onclick="">FOLLOW</button>
+                <?php
+					$username = $userLoggedIn->getUsername();
+
+					$u1 = mysqli_query($con,"select * from user where username = '$username' ");
+					$a = mysqli_query($con,"select * from artist where a_id = '$artistId' ");
+					$u1_id = mysqli_fetch_array($u1);
+					$a_id = mysqli_fetch_array($a);
+
+					$id1 = $u1_id['u_id'];
+					$id2 = $a_id['a_id'];
+
+					
+						$query = mysqli_query($con, "select * from follows_artist where u_id = '$id1' and a_id = '$id2' ");
+
+						if(mysqli_num_rows($query) == 0){
+							echo "<button class='button' onclick='followArtist(\"" . $artistId . "\")'>FOLLOW</button>";
+						}
+						else {
+							echo "<button class='button green unfollowButton' onclick='unfollowArtist(\"" . $artistId . "\")'>FOLLOWING</button>";
+						}
+					
+					
+					
+				?>
 			</div>
 
 		</div>

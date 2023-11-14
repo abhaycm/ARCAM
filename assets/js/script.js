@@ -264,3 +264,20 @@ function unfollowUser(username) {
 	openPage("user.php?id="+username);
 }
 
+function followArtist(artistid) {
+    // Assuming you are using AJAX to send the request to the server
+    $.post("includes/handlers/ajax/followArtist.php", { artistid: artistid, userLoggedIn:userLoggedIn }, function(data) {
+        // Handle the response from the server if needed
+        console.log(data);
+    });
+	openPage("artist.php?id="+artistid);
+}
+
+function unfollowArtist(artistid) {
+    // Assuming you are using AJAX to send the request to the server
+    $.post("includes/handlers/ajax/unfollowArtist.php", { artistid: artistid, userLoggedIn:userLoggedIn }, function(data) {
+        // Handle the response from the server if needed
+        console.log(data);
+    });
+	openPage("artist.php?id="+artistid);
+}
