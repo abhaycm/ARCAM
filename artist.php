@@ -145,6 +145,47 @@ $artist = new Artist($con, $artistId);
 
 </div>
 
+<div class="gridViewContainer">
+	<h2 style="text-align:center;">Other Users that follow this Artist</h2>
+	<?php
+		$albumQuery = mysqli_query($con, "SELECT username,u_id
+		FROM user
+		WHERE u_id IN (
+			SELECT u_id
+			FROM follows_artist
+			WHERE a_id = $artistId
+		);
+		");
+		$username=$userLoggedIn->getUserName();
+		$u1_id = mysqli_query($con,"select u_id from user where username = '$username' ");
+		$u1 = mysqli_fetch_array($u1_id);
+		$id=$u1['u_id'];
+
+		while($row = mysqli_fetch_array($albumQuery)) {
+			$u2=$row['u_id'];
+
+
+			if($u2!=$id) {
+		
+				echo "<div class='gridViewItem'>
+						<span role='link' tabindex='0' onclick='openPage(\"user.php?id=" . $row['username'] . "\")'>
+							<img src='assets/images/profile-pics/dp1.png'>
+
+							<div class='gridViewInfo'>"
+								. $row['username'] .
+							"</div>
+						</span>
+
+					</div>";
+			}
+
+
+
+		}
+	?>
+
+</div>
+
 <nav class="optionsMenu">
 	<input type="hidden" class="songId">
 	<?php echo Playlist::getPlaylistsDropdown($con, $userLoggedIn->getUsername()); ?>

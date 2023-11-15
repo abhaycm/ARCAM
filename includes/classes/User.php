@@ -28,5 +28,11 @@
 			$row = mysqli_fetch_array($query);
 			return $row['name'];
 		}
+
+		public function getType() {
+			$query = mysqli_query($this->con, "SELECT type FROM user WHERE username='$this->username'");
+			$row = mysqli_fetch_array($query);
+			return $row['type'];
+		}
 	}
 ?>
