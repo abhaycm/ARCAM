@@ -80,6 +80,10 @@
 						<input id="name" name="name" type="text" placeholder="e.g. bart" value="<?php getInputValue('name') ?>" required>
 					</p>
 					<p>
+						<label for="type">Type</label>
+						<input id="type" name="type" type="text" placeholder="REGULAR or ARTIST" value="<?php getInputValue('name') ?>" required>
+					</p>
+					<p>
 						<?php echo $account->getError(Constants::$emailsDoNotMatch); ?>
 						<?php echo $account->getError(Constants::$emailInvalid); ?>
 						<?php echo $account->getError(Constants::$emailTaken); ?>

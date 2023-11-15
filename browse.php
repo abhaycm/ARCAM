@@ -19,7 +19,7 @@ include("includes/includedFiles.php");
 		GROUP BY
 			music_release.r_id
 		ORDER BY
-			total_plays ASC;");
+			total_plays desc;");
 
 		while($row = mysqli_fetch_array($releaseQuery)) {
 			

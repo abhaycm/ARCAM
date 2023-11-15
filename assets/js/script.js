@@ -287,3 +287,26 @@ function dislikesPlaylist(playlist_id) {
     });
 	openPage("playlist.php?id="+playlist_id);
 }
+
+function createMusic(){
+    var release_name = prompt("Enter release name");
+    var type = prompt("Is it a Single, EP or Album");
+    var genre = prompt("Enter the genre");
+    var cover_art = prompt("Enter the path to the cover_art");
+    var number_of_tracks = prompt("Enter number of tracks");
+    $.post("includes/handlers/ajax/createRelease.php", { name: release_name, username: userLoggedIn ,type: type, genre: genre,cover_art: cover_art, number_of_tracks: number_of_tracks }, function(data) {
+        console.log(data);
+    });
+    
+    var release_order = 1;
+
+    while(number_of_tracks>0){
+        var song_name = prompt("Enter the song name");
+        var song_path = prompt("Enter the path to the song");
+        var duration = prompt("Enter the duration");
+        $.post("includes/handlers/ajax/addReleaseSong.php", {name:song_name , path:song_path , duration:duration , release_order:release_order}, function(data) {
+            console.log(data);
+        });
+        number_of_tracks = number_of_tracks - 1;
+    }
+}

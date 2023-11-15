@@ -24,7 +24,7 @@
 
 		}
 
-		public function register($un, $nm, $em, $em2, $pw, $pw2) {
+		public function register($un, $nm, $tp, $em, $em2, $pw, $pw2) {
 			$this->validateUsername($un);
 			$this->validateName($nm);
 			$this->validateEmails($em, $em2);
@@ -32,7 +32,7 @@
 
 			if(empty($this->errorArray) == true) {
 				//Insert into db
-				return $this->insertUserDetails($un, $nm, $em, $pw);
+				return $this->insertUserDetails($un, $nm, $tp, $em, $pw);
 			}
 			else {
 				return false;
@@ -47,11 +47,11 @@
 			return "<span class='errorMessage'>$error</span>";
 		}
 
-        private function insertUserDetails($un, $nm, $em, $pw){
+        private function insertUserDetails($un, $nm, $tp, $em, $pw){
             $encryptedPw = md5($pw);
             $profilePic = "assets/images/profile-pic/dp1.png";
 
-            $result = mysqli_query($this->con, "insert into user values('','$un','$nm','$em','','$encryptedPw','$profilePic')");
+            $result = mysqli_query($this->con, "insert into user values('','$un','$nm','$tp','$em','','$encryptedPw','$profilePic')");
 
             return $result;
         }
