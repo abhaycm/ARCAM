@@ -22,8 +22,9 @@ $(window).scroll(function() {
 });
 
 $(document).on("change", "select.playlist", function() {
-	var playlistId = $(this).val();
-	var songId = $(this).prev(".songId").val();
+    select = $(this);
+	var playlistId = select.val();
+	var songId = select.prev(".songId").val();
 
     $.post("includes/handlers/ajax/addToPlaylist.php", { playlistId: playlistId, songId: songId})
 	.done(function(error) {
@@ -36,6 +37,13 @@ $(document).on("change", "select.playlist", function() {
 		hideOptionsMenu();
 		select.val("");
 	});
+    var currentUrl = window.location.href;
+
+    // Use URLSearchParams to parse the URL and get the value of the 'id' parameter
+    var urlParams = new URLSearchParams(window.location.search);
+    var id = urlParams.get('id');
+    
+    openPage("album.php?id="+id);
 });
 
 function updateEmail(emailClass) {
